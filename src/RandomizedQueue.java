@@ -49,7 +49,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         Item returnValue = items[randomIndex];
         items[randomIndex] = items[--size];
         items[size] = null;
-        if (size == items.length / 4) resize(items.length / 2);
+        if (size > 0 && size == items.length / 4) resize(items.length / 2);
         return returnValue;
     }
 
@@ -72,7 +72,10 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         private int copySize;
 
         public RandomizedQueueIterator() {
-            copyItems = items;
+            copyItems = (Item[]) new Object[size];
+            for (int i = 0; i < size; i++) {
+                copyItems[i] = items[i];
+            }
             copySize = size;
         }
 
@@ -86,8 +89,8 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
             if (!hasNext()) throw new NoSuchElementException();
             int randomIndex = StdRandom.uniform(copySize);
             Item returnValue = copyItems[randomIndex];
-            copyItems[randomIndex] = copyItems[--size];
-            copyItems[size] = null;
+            copyItems[randomIndex] = copyItems[--copySize];
+            copyItems[copySize] = null;
             //if (size == items.length / 4) resize(size / 2);
             return returnValue;
         }
@@ -100,13 +103,9 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
     // unit testing (required)
     public static void main(String[] args) {
-        RandomizedQueue<Integer> q=new RandomizedQueue<>();
-        for(int i=1;i<=10;i++){
-            q.enqueue(i);
-        }
-        for(int i=1;i<=10;i++){
-            StdOut.println(q.sample());
-        }
+        RandomizedQueue<Integer> q = new RandomizedQueue<Integer>();
+        q.enqueue(2);
+        Iterator<Integer> it = q.iterator();
     }
 
 }
