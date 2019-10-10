@@ -6,7 +6,7 @@ import edu.princeton.cs.algs4.StdOut;
 
 public class Deque<Item> implements Iterable<Item> {
 
-    private class node {
+    private class node{
         Item item;
         node last, next;
 
@@ -17,12 +17,14 @@ public class Deque<Item> implements Iterable<Item> {
         }
     }
 
-    private node head = null, tail = null;
+    private node head , tail;
 
     private int size = 0;
 
     // construct an empty deque
     public Deque() {
+        head=tail=null;
+        size=0;
     }
 
     // is the deque empty?
@@ -117,9 +119,6 @@ public class Deque<Item> implements Iterable<Item> {
         Deque<Integer> q = new Deque<Integer>();
         q.addFirst(1);
         q.addLast(2);
-        for i:q){
-
-        }
     }
 
 }
