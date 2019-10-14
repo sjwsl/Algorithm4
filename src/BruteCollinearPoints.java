@@ -5,6 +5,7 @@ import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdDraw;
 import edu.princeton.cs.algs4.StdIn;
 
+import javax.sound.sampled.Line;
 
 
 public class BruteCollinearPoints {
@@ -25,7 +26,7 @@ public class BruteCollinearPoints {
 
         for (int i = 0; i < points.length; i++)
             for (int j = i + 1; j < points.length; j++) {
-                if (points[i] == points[j]) throw new IllegalArgumentException();
+                if (points[i].toString() == points[j].toString()) throw new IllegalArgumentException();
             }
 
         Arrays.sort(points);
@@ -45,12 +46,14 @@ public class BruteCollinearPoints {
 
     // the number of line segments
     public int numberOfSegments() {
-        return segments.length;
+        LineSegment[] copySegments=segments;
+        return copySegments.length;
     }
 
     // the line segments
     public LineSegment[] segments() {
-        return segments;
+        LineSegment[] copySegments=segments;
+        return copySegments;
     }
 
     public static void main(String[] args) {
