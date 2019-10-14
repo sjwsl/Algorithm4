@@ -5,9 +5,6 @@ import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdDraw;
 import edu.princeton.cs.algs4.StdIn;
 
-import javax.sound.sampled.Line;
-
-
 public class BruteCollinearPoints {
 
     private LineSegment[] segments;
