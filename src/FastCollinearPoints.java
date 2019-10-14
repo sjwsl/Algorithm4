@@ -10,22 +10,19 @@ public class FastCollinearPoints {
     private LineSegment[] segments;
     private ArrayList<String> visited = new ArrayList<String>();
 
-    private ArrayList<LineSegment> collinear(Point[] ppoints, int center) {
+    private ArrayList<LineSegment> collinear(Point[] points, int center) {
         ArrayList<LineSegment> segments = new ArrayList<LineSegment>();
-        Point[] points=new Point[ppoints.length-center-1];
-        for(int i=center+1;i<ppoints.length;i++){
-            points[i-center-1]=ppoints[i];
-        }
+        Point[] copypoints = Arrays.copyOf(points,points.length);
 
-        Arrays.sort(points, ppoints[center].slopeOrder());
-        for (int i = 0; i < points.length; i++) {
-            double nowSlope = points[i].slopeTo(ppoints[center]);
+        Arrays.sort(copypoints, points[center].slopeOrder());
+        for (int i = 0; i < copypoints.length; i++) {
+            double nowSlope = copypoints[i].slopeTo(points[center]);
             int last = i;
-            while (last + 1 < points.length && points[last + 1].slopeTo(ppoints[center]) == nowSlope) ++last;
+            while (last + 1 < copypoints.length && copypoints[last + 1].slopeTo(points[center]) == nowSlope) ++last;
             if (last - i + 1 >= 3) {
                 ArrayList<Point> sameSlopePoints = new ArrayList<Point>();
-                sameSlopePoints.add(ppoints[center]);
-                for (int j = i; j <= last; j++) sameSlopePoints.add(points[j]);
+                sameSlopePoints.add(points[center]);
+                for (int j = i; j <= last; j++) sameSlopePoints.add(copypoints[j]);
                 Point[] sameSlopePointsArray = sameSlopePoints.toArray(new Point[sameSlopePoints.size()]);
                 Arrays.sort(sameSlopePointsArray);
                 LineSegment now=new LineSegment(sameSlopePointsArray[0], sameSlopePointsArray[sameSlopePointsArray.length - 1]);
@@ -44,13 +41,13 @@ public class FastCollinearPoints {
 
         if (points == null) throw new IllegalArgumentException();
 
-        for (int i = 0; i + 3 < points.length; i++) {
+        for (int i = 0; i < points.length; i++) {
             if (points[i] == null) throw new IllegalArgumentException();
         }
 
         for (int i = 0; i < points.length; i++)
             for (int j = i + 1; j < points.length; j++) {
-                if (points[i].toString().equals(points[j].toString())) throw new IllegalArgumentException();
+                if (points[i].slopeTo(points[j])==Double.NEGATIVE_INFINITY) throw new IllegalArgumentException();
             }
 
         ArrayList<LineSegment> segments = new ArrayList<LineSegment>();
@@ -63,17 +60,15 @@ public class FastCollinearPoints {
 
     }
 
-    // the number of line segments
     public int numberOfSegments() {
-        LineSegment[] copySegments=segments.clone();
-        return copySegments.length;
+        return segments.length;
     }
 
     // the line segments
     public LineSegment[] segments() {
-        LineSegment[] copySegments=segments.clone();
-        return copySegments;
+        return Arrays.copyOf(segments,segments.length);
     }
+
     public static void main(String[] args) {
         String a=new String("aa");
         String b=new String("bb");
