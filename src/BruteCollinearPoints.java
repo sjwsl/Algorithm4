@@ -23,10 +23,13 @@ public class BruteCollinearPoints {
 
         for (int i = 0; i < points.length; i++)
             for (int j = i + 1; j < points.length; j++) {
-                if (points[i].toString().equals(points[j].toString())) throw new IllegalArgumentException();
+                if (points[i].slopeTo(points[j])==Double.NEGATIVE_INFINITY) throw new IllegalArgumentException();
             }
 
+
+        Point[] points= Arrays.copyOf(points,points.length);
         Arrays.sort(points);
+
         ArrayList<LineSegment> segmentsList=new ArrayList<LineSegment>();
 
 
@@ -35,7 +38,7 @@ public class BruteCollinearPoints {
                 for (int k = j + 1; k < points.length; k++)
                     for (int l = k + 1; l < points.length; l++) {
                         if (collinear(points[i], points[j], points[k]) && collinear(points[i], points[k], points[l])) {
-                            segmentsList.add(new LineSegment(points[i], points[l]));
+                            segmentsList.add(new LineSegment(points[i],points[l]));
                         }
                     }
         segments=segmentsList.toArray(new LineSegment[segmentsList.size()]);
@@ -43,17 +46,16 @@ public class BruteCollinearPoints {
 
     // the number of line segments
     public int numberOfSegments() {
-        LineSegment[] copySegments=segments.clone();
-        return copySegments.length;
+        return segments.length;
     }
 
     // the line segments
     public LineSegment[] segments() {
-        LineSegment[] copySegments=segments.clone();
-        return copySegments;
+        return Arrays.copyOf(segments,segments.length);
     }
 
     public static void main(String[] args) {
+
 
         // read the n points from a file
         int n = StdIn.readInt();
