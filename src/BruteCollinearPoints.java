@@ -27,18 +27,18 @@ public class BruteCollinearPoints {
             }
 
 
-        Point[] points= Arrays.copyOf(points,points.length);
-        Arrays.sort(points);
+        Point[] copyPoints= Arrays.copyOf(points,points.length);
+        Arrays.sort(copyPoints);
 
         ArrayList<LineSegment> segmentsList=new ArrayList<LineSegment>();
 
 
-        for (int i = 0; i < points.length; i++)
-            for (int j = i + 1; j < points.length; j++)
-                for (int k = j + 1; k < points.length; k++)
-                    for (int l = k + 1; l < points.length; l++) {
-                        if (collinear(points[i], points[j], points[k]) && collinear(points[i], points[k], points[l])) {
-                            segmentsList.add(new LineSegment(points[i],points[l]));
+        for (int i = 0; i < copyPoints.length; i++)
+            for (int j = i + 1; j < copyPoints.length; j++)
+                for (int k = j + 1; k < copyPoints.length; k++)
+                    for (int l = k + 1; l < copyPoints.length; l++) {
+                        if (collinear(copyPoints[i], copyPoints[j], copyPoints[k]) && collinear(copyPoints[i], copyPoints[k], copyPoints[l])) {
+                            segmentsList.add(new LineSegment(copyPoints[i],copyPoints[l]));
                         }
                     }
         segments=segmentsList.toArray(new LineSegment[segmentsList.size()]);
