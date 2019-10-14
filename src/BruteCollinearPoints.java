@@ -23,7 +23,7 @@ public class BruteCollinearPoints {
 
         for (int i = 0; i < points.length; i++)
             for (int j = i + 1; j < points.length; j++) {
-                if (points[i].toString() == points[j].toString()) throw new IllegalArgumentException();
+                if (points[i].toString().equals(points[j].toString())) throw new IllegalArgumentException();
             }
 
         Arrays.sort(points);
@@ -43,13 +43,13 @@ public class BruteCollinearPoints {
 
     // the number of line segments
     public int numberOfSegments() {
-        LineSegment[] copySegments=segments;
+        LineSegment[] copySegments=segments.clone();
         return copySegments.length;
     }
 
     // the line segments
     public LineSegment[] segments() {
-        LineSegment[] copySegments=segments;
+        LineSegment[] copySegments=segments.clone();
         return copySegments;
     }
 
