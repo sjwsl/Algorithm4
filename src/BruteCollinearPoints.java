@@ -1,13 +1,10 @@
 import java.util.Arrays;
-import java.util.NoSuchElementException;
 import java.util.ArrayList;
 
-import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdDraw;
 import edu.princeton.cs.algs4.StdIn;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.LineTo;
+
 
 
 public class BruteCollinearPoints {
@@ -20,15 +17,15 @@ public class BruteCollinearPoints {
 
     // finds all line segments containing 4 points
     public BruteCollinearPoints(Point[] points) {
-        if (points == null) throw new NoSuchElementException();
+        if (points == null) throw new IllegalArgumentException();
 
         for (int i = 0; i < points.length; i++) {
-            if (points[i] == null) throw new NoSuchElementException();
+            if (points[i] == null) throw new IllegalArgumentException();
         }
 
         for (int i = 0; i < points.length; i++)
             for (int j = i + 1; j < points.length; j++) {
-                if (points[i] == points[j]) throw new NoSuchElementException();
+                if (points[i] == points[j]) throw new IllegalArgumentException();
             }
 
         Arrays.sort(points);
