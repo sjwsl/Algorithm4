@@ -1,11 +1,32 @@
 import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdDraw;
 import edu.princeton.cs.algs4.StdIn;
+import org.jetbrains.annotations.NotNull;
 
 public class FastCollinearPoints {
+
+    private class Pair implements Comparable<Pair>{
+
+        public Point a;
+        public Point b;
+
+        public Pair(Point a,Point b){
+            this.a=a;
+            this.b=b;
+        }
+
+        @Override
+        public int compareTo(@NotNull FastCollinearPoints.Pair pair) {
+            if(this.a.compareTo(pair.a)==-1)return -1;
+            if(this.a.compareTo(pair.a)==1)return 1;
+            return this.b.compareTo(pair.b);
+        }
+    }
+
     private LineSegment[] segments;
     //private ArrayList<String> visited = new ArrayList<String>();
 
@@ -66,16 +87,17 @@ public class FastCollinearPoints {
         Point[] pointaArray=pointa.toArray(new Point[pointa.size()]);
         Point[] pointbArray=pointb.toArray(new Point[pointb.size()]);
 
+        Pair[] pairs = new Pair[pointaArray.length];
+        for(int i=0;i<pointbArray.length;i++){
+            pairs[i]=new Pair(pointaArray[i],pointbArray[i]);
+        }
 
-        for(int i=0;i<pointa.size();i++){
-            boolean visited=false;
-            for(int j=0;j<i;j++){
-                if(pointaArray[i].slopeTo(pointaArray[j])==Double.NEGATIVE_INFINITY&&pointbArray[i].slopeTo(pointbArray[j])==Double.NEGATIVE_INFINITY){
-                    visited=true;
-                    break;
-                }
-            }
-            if(!visited)segments.add(new LineSegment(pointaArray[i],pointbArray[i]));
+        Arrays.sort(pairs);
+
+        for(int i=0;i<pairs.length;i++){
+            //if(i>0&&pointaArray[i].slopeTo(pointaArray[i-1])==Double.NEGATIVE_INFINITY&&pointbArray[i].slopeTo(pointbArray[i-1])==Double.NEGATIVE_INFINITY) continue;
+            if(i>0&&pairs[i].a.slopeTo(pairs[i-1].a)==Double.NEGATIVE_INFINITY&&pairs[i].b.slopeTo(pairs[i-1].b)==Double.NEGATIVE_INFINITY)continue;
+            segments.add(new LineSegment(pairs[i].a,pairs[i].b));
         }
 
 
