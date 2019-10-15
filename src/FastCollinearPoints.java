@@ -1,6 +1,5 @@
 import java.util.Arrays;
 import java.util.ArrayList;
-import java.util.Objects;
 
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdDraw;
@@ -8,9 +7,9 @@ import edu.princeton.cs.algs4.StdIn;
 
 public class FastCollinearPoints {
     private LineSegment[] segments;
-    private ArrayList<String> visited = new ArrayList<String>();
+    //private ArrayList<String> visited = new ArrayList<String>();
 
-    private ArrayList<LineSegment> collinear(Point[] points, int center) {
+    private ArrayList<LineSegment> collinear(Point[] points, int center,ArrayList<Point> pointa,ArrayList<Point> pointb) {
         ArrayList<LineSegment> segments = new ArrayList<LineSegment>();
         Point[] copypoints = Arrays.copyOf(points,points.length);
 
@@ -25,11 +24,16 @@ public class FastCollinearPoints {
                 for (int j = i; j <= last; j++) sameSlopePoints.add(copypoints[j]);
                 Point[] sameSlopePointsArray = sameSlopePoints.toArray(new Point[sameSlopePoints.size()]);
                 Arrays.sort(sameSlopePointsArray);
-                LineSegment now=new LineSegment(sameSlopePointsArray[0], sameSlopePointsArray[sameSlopePointsArray.length - 1]);
-                if(!visited.contains(now.toString())){
-                    segments.add(now);
-                    visited.add(now.toString());
-                }
+
+                pointa.add(sameSlopePointsArray[0]);
+                pointb.add(sameSlopePointsArray[sameSlopePointsArray.length-1]);
+
+                //LineSegment now=new LineSegment(sameSlopePointsArray[0], sameSlopePointsArray[sameSlopePointsArray.length - 1]);
+                //if(!visited.contains(now.toString())){
+                //    segments.add(now);
+                //    visited.add(now.toString());
+                //}
+
             }
             i = last;
         }
@@ -51,9 +55,29 @@ public class FastCollinearPoints {
             }
 
         ArrayList<LineSegment> segments = new ArrayList<LineSegment>();
+
+        ArrayList<Point> pointa=new ArrayList<Point>();
+        ArrayList<Point> pointb=new ArrayList<Point>();
+
         for (int i = 0; i < points.length; i++) {
-            segments.addAll(collinear(points, i));
+            collinear(points, i, pointa, pointb);
         }
+
+        Point[] pointaArray=pointa.toArray(new Point[pointa.size()]);
+        Point[] pointbArray=pointb.toArray(new Point[pointb.size()]);
+
+
+        for(int i=0;i<pointa.size();i++){
+            boolean visited=false;
+            for(int j=0;j<i;j++){
+                if(pointaArray[i].slopeTo(pointaArray[j])==Double.NEGATIVE_INFINITY&&pointbArray[i].slopeTo(pointbArray[j])==Double.NEGATIVE_INFINITY){
+                    visited=true;
+                    break;
+                }
+            }
+            if(!visited)segments.add(new LineSegment(pointaArray[i],pointbArray[i]));
+        }
+
 
 
         this.segments = segments.toArray(new LineSegment[segments.size()]);
