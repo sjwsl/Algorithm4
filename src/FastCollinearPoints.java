@@ -8,20 +8,20 @@ import edu.princeton.cs.algs4.StdIn;
 
 public class FastCollinearPoints {
 
-    private class Pair implements Comparable<Pair>{
+    private class Pair implements Comparable<Pair> {
 
         public Point a;
         public Point b;
 
-        public Pair(Point a,Point b){
-            this.a=a;
-            this.b=b;
+        public Pair(Point a, Point b) {
+            this.a = a;
+            this.b = b;
         }
 
         @Override
         public int compareTo(FastCollinearPoints.Pair pair) {
-            if(this.a.compareTo(pair.a)==-1)return -1;
-            if(this.a.compareTo(pair.a)==1)return 1;
+            if (this.a.compareTo(pair.a) == -1) return -1;
+            if (this.a.compareTo(pair.a) == 1) return 1;
             return this.b.compareTo(pair.b);
         }
     }
@@ -29,24 +29,33 @@ public class FastCollinearPoints {
     private LineSegment[] segments;
     //private ArrayList<String> visited = new ArrayList<String>();
 
-    private ArrayList<LineSegment> collinear(Point[] points, int center,ArrayList<Point> pointa,ArrayList<Point> pointb) {
+    private ArrayList<LineSegment> collinear(Point[] points, int center, ArrayList<Point> pointa, ArrayList<Point> pointb) {
         ArrayList<LineSegment> segments = new ArrayList<LineSegment>();
-        Point[] copypoints = Arrays.copyOf(points,points.length);
-
+        Point[] copypoints = Arrays.copyOf(points, points.length);
         Arrays.sort(copypoints, points[center].slopeOrder());
         for (int i = 0; i < copypoints.length; i++) {
             double nowSlope = copypoints[i].slopeTo(points[center]);
             int last = i;
             while (last + 1 < copypoints.length && copypoints[last + 1].slopeTo(points[center]) == nowSlope) ++last;
             if (last - i + 1 >= 3) {
-                ArrayList<Point> sameSlopePoints = new ArrayList<Point>();
-                sameSlopePoints.add(points[center]);
-                for (int j = i; j <= last; j++) sameSlopePoints.add(copypoints[j]);
-                Point[] sameSlopePointsArray = sameSlopePoints.toArray(new Point[sameSlopePoints.size()]);
-                Arrays.sort(sameSlopePointsArray);
+                //ArrayList<Point> sameSlopePoints = new ArrayList<Point>();
+                //sameSlopePoints.add(points[center]);
+                if (points[center].compareTo(copypoints[i]) < 0) {
+                    pointa.add(points[center]);
+                    pointb.add(copypoints[last]);
+                } else if (points[center].compareTo(copypoints[last]) > 0) {
+                    pointa.add(copypoints[i]);
+                    pointb.add(points[center]);
+                } else {
+                    pointa.add(copypoints[i]);
+                    pointb.add(copypoints[last]);
+                }
+                //for (int j = i; j <= last; j++) sameSlopePoints.add(copypoints[j]);
+                //Point[] sameSlopePointsArray = sameSlopePoints.toArray(new Point[sameSlopePoints.size()]);
+                //Arrays.sort(sameSlopePointsArray);
 
-                pointa.add(sameSlopePointsArray[0]);
-                pointb.add(sameSlopePointsArray[sameSlopePointsArray.length-1]);
+                //pointa.add(sameSlopePointsArray[0]);
+                //pointb.add(sameSlopePointsArray[sameSlopePointsArray.length-1]);
 
                 //LineSegment now=new LineSegment(sameSlopePointsArray[0], sameSlopePointsArray[sameSlopePointsArray.length - 1]);
                 //if(!visited.contains(now.toString())){
@@ -71,34 +80,38 @@ public class FastCollinearPoints {
 
         for (int i = 0; i < points.length; i++)
             for (int j = i + 1; j < points.length; j++) {
-                if (points[i].slopeTo(points[j])==Double.NEGATIVE_INFINITY) throw new IllegalArgumentException();
+                if (points[i].slopeTo(points[j]) == Double.NEGATIVE_INFINITY) throw new IllegalArgumentException();
             }
 
         ArrayList<LineSegment> segments = new ArrayList<LineSegment>();
 
-        ArrayList<Point> pointa=new ArrayList<Point>();
-        ArrayList<Point> pointb=new ArrayList<Point>();
+        ArrayList<Point> pointa = new ArrayList<Point>();
+        ArrayList<Point> pointb = new ArrayList<Point>();
 
-        for (int i = 0; i < points.length; i++) {
-            collinear(points, i, pointa, pointb);
+        Point[] copyPoints = Arrays.copyOf(points, points.length);
+
+        Arrays.sort(copyPoints);
+
+        for (int i = 0; i < copyPoints.length; i++) {
+            collinear(copyPoints, i, pointa, pointb);
         }
 
-        Point[] pointaArray=pointa.toArray(new Point[pointa.size()]);
-        Point[] pointbArray=pointb.toArray(new Point[pointb.size()]);
+        Point[] pointaArray = pointa.toArray(new Point[pointa.size()]);
+        Point[] pointbArray = pointb.toArray(new Point[pointb.size()]);
 
         Pair[] pairs = new Pair[pointaArray.length];
-        for(int i=0;i<pointbArray.length;i++){
-            pairs[i]=new Pair(pointaArray[i],pointbArray[i]);
+        for (int i = 0; i < pointbArray.length; i++) {
+            pairs[i] = new Pair(pointaArray[i], pointbArray[i]);
         }
 
         Arrays.sort(pairs);
 
-        for(int i=0;i<pairs.length;i++){
+        for (int i = 0; i < pairs.length; i++) {
             //if(i>0&&pointaArray[i].slopeTo(pointaArray[i-1])==Double.NEGATIVE_INFINITY&&pointbArray[i].slopeTo(pointbArray[i-1])==Double.NEGATIVE_INFINITY) continue;
-            if(i>0&&pairs[i].a.slopeTo(pairs[i-1].a)==Double.NEGATIVE_INFINITY&&pairs[i].b.slopeTo(pairs[i-1].b)==Double.NEGATIVE_INFINITY)continue;
-            segments.add(new LineSegment(pairs[i].a,pairs[i].b));
+            if (i > 0 && pairs[i].a.slopeTo(pairs[i - 1].a) == Double.NEGATIVE_INFINITY && pairs[i].b.slopeTo(pairs[i - 1].b) == Double.NEGATIVE_INFINITY)
+                continue;
+            segments.add(new LineSegment(pairs[i].a, pairs[i].b));
         }
-
 
 
         this.segments = segments.toArray(new LineSegment[segments.size()]);
@@ -111,13 +124,13 @@ public class FastCollinearPoints {
 
     // the line segments
     public LineSegment[] segments() {
-        return Arrays.copyOf(segments,segments.length);
+        return Arrays.copyOf(segments, segments.length);
     }
 
     public static void main(String[] args) {
-        String a=new String("aa");
-        String b=new String("bb");
-        StdOut.println(a==b);
+        String a = new String("aa");
+        String b = new String("bb");
+        StdOut.println(a == b);
 
 
         // read the n points from a file
