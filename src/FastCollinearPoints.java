@@ -5,7 +5,6 @@ import java.util.Comparator;
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdDraw;
 import edu.princeton.cs.algs4.StdIn;
-import org.jetbrains.annotations.NotNull;
 
 public class FastCollinearPoints {
 
@@ -20,7 +19,7 @@ public class FastCollinearPoints {
         }
 
         @Override
-        public int compareTo(@NotNull FastCollinearPoints.Pair pair) {
+        public int compareTo(FastCollinearPoints.Pair pair) {
             if(this.a.compareTo(pair.a)==-1)return -1;
             if(this.a.compareTo(pair.a)==1)return 1;
             return this.b.compareTo(pair.b);
