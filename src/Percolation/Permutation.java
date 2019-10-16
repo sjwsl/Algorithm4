@@ -24,25 +24,24 @@ public class Permutation {
         */
 
 
-
         RandomizedQueue<String> randomizedQueue = new RandomizedQueue<String>();
 
-        while(!StdIn.isEmpty()){
+        while (!StdIn.isEmpty()) {
             randomizedQueue.enqueue(StdIn.readString());
-            if(randomizedQueue.size()==k)break;
+            if (randomizedQueue.size() == k) break;
         }
-        int n=k+1;
-        while(!StdIn.isEmpty()){
-            String now=StdIn.readString();
-            int randomIndex=StdRandom.uniform(1,n+1);
-            if(randomIndex<=k){
+        int n = k + 1;
+        while (!StdIn.isEmpty()) {
+            String now = StdIn.readString();
+            int randomIndex = StdRandom.uniform(1, n + 1);
+            if (randomIndex <= k) {
                 randomizedQueue.dequeue();
                 randomizedQueue.enqueue(now);
             }
             n++;
         }
 
-        for(int i=0;i<k;i++){
+        for (int i = 0; i < k; i++) {
             StdOut.println(randomizedQueue.dequeue());
         }
 
