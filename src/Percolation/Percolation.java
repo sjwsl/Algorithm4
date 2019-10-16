@@ -11,9 +11,9 @@ public class Percolation {
 
     private boolean[][] percolation;
 
-    private final int n,totalDirection = 4;
+    private final int n, totalDirection = 4;
 
-    private int top, bottom,numberOfOpenSites = 0;
+    private int top, bottom, numberOfOpenSites = 0;
 
     private final int[] directionX = {1, -1, 0, 0};
     private final int[] directionY = {0, 0, 1, -1};
