@@ -1,3 +1,4 @@
+package Collinear;
 
 public class LineSegment {
     private final Point p;   // one endpoint of this line segment

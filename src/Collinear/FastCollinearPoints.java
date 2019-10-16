@@ -1,6 +1,7 @@
+package Collinear;
+
 import java.util.Arrays;
 import java.util.ArrayList;
-import java.util.Comparator;
 
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdDraw;
@@ -38,7 +39,7 @@ public class FastCollinearPoints {
             int last = i;
             while (last + 1 < copypoints.length && copypoints[last + 1].slopeTo(points[center]) == nowSlope) ++last;
             if (last - i + 1 >= 3) {
-                //ArrayList<Point> sameSlopePoints = new ArrayList<Point>();
+                //ArrayList<Collinear.Point> sameSlopePoints = new ArrayList<Collinear.Point>();
                 //sameSlopePoints.add(points[center]);
                 if (points[center].compareTo(copypoints[i]) < 0) {
                     pointa.add(points[center]);
@@ -51,13 +52,13 @@ public class FastCollinearPoints {
                     pointb.add(copypoints[last]);
                 }
                 //for (int j = i; j <= last; j++) sameSlopePoints.add(copypoints[j]);
-                //Point[] sameSlopePointsArray = sameSlopePoints.toArray(new Point[sameSlopePoints.size()]);
+                //Collinear.Point[] sameSlopePointsArray = sameSlopePoints.toArray(new Collinear.Point[sameSlopePoints.size()]);
                 //Arrays.sort(sameSlopePointsArray);
 
                 //pointa.add(sameSlopePointsArray[0]);
                 //pointb.add(sameSlopePointsArray[sameSlopePointsArray.length-1]);
 
-                //LineSegment now=new LineSegment(sameSlopePointsArray[0], sameSlopePointsArray[sameSlopePointsArray.length - 1]);
+                //Collinear.LineSegment now=new Collinear.LineSegment(sameSlopePointsArray[0], sameSlopePointsArray[sameSlopePointsArray.length - 1]);
                 //if(!visited.contains(now.toString())){
                 //    segments.add(now);
                 //    visited.add(now.toString());

@@ -1,7 +1,8 @@
+package Collinear;
+
 import java.util.Comparator;
 
 import edu.princeton.cs.algs4.StdDraw;
-import edu.princeton.cs.algs4.StdOut;
 
 public class Point implements Comparable<Point> {
 
@@ -110,11 +111,11 @@ public class Point implements Comparable<Point> {
     }
 
     /**
-     * Unit tests the Point data type.
+     * Unit tests the Collinear.Point data type.
      */
     public static void main(String[] args) {
-        //Point a = new Point(1, 1);
-        //Point b = new Point(100, 100);
+        //Collinear.Point a = new Collinear.Point(1, 1);
+        //Collinear.Point b = new Collinear.Point(100, 100);
         //StdDraw.line(1,1,100,100);
         //a.drawTo(b);
     }

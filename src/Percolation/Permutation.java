@@ -1,3 +1,6 @@
+package Percolation;
+
+import Queue.RandomizedQueue;
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdRandom;
@@ -9,7 +12,7 @@ public class Permutation {
         if (k == 0) return;
         /*
 
-        RandomizedQueue<String> randomizedQueue = new RandomizedQueue();
+        Queue.RandomizedQueue<String> randomizedQueue = new Queue.RandomizedQueue();
         while (!StdIn.isEmpty()) {
             randomizedQueue.enqueue(StdIn.readString());
             if(randomizedQueue.size()==k)break;
