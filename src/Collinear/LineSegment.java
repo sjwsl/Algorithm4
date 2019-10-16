@@ -5,12 +5,12 @@ public class LineSegment {
     private final Point q;   // the other endpoint of this line segment
 
     /**
-     *  Initializes a new line segment.
+     * Initializes a new line segment.
      *
-     * @param  p one endpoint
-     * @param  q the other endpoint
+     * @param p one endpoint
+     * @param q the other endpoint
      * @throws NullPointerException if either <tt>p</tt> or <tt>q</tt>
-     *         is <tt>null</tt>
+     *                              is <tt>null</tt>
      */
     public LineSegment(Point p, Point q) {
         if (p == null || q == null) {
